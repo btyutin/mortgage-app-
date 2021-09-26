@@ -26,4 +26,31 @@
 - `PROXY_API_URL={YOUR_LOCAL_API}` По умолчанию `https://mortgage.easychain.tech`
 `
 
+### Разработчики
+
+ - Борис Тютин
+ - Александр Леванов
+
+### Предсозданные роли и организации
+
+```
+Банки:
+alfabank/alfabank - для работы от лица Банка (Альфа)
+sber/sber - для работы от лица Банка (Сбер)
+vtb/vtb - для работы от лица Банка (ВТБ)
+
+Страховые компании:
+sogaz/sogaz - для работы от лица Страховой Компании (Согаз)
+alphains/alphains - для работы от лица Страховой Компании (Альфа-Страхования)
+
+Заемщики:
+user/user
+```
+
+### Тестовый стенд
+
+[Тестовый стенд](https://mortgage.easychain.tech/) (бек + фронт + блокчейн) расположен по адресу
+[Поработать с API](https://mortgage.easychain.tech/api/v0/mortgage-app/swagger-ui.html) напрямую можно по ссылке
+[Обозреватель Blockchain](https://explorer.mortgage-dev.weintegrator.com/)  (логин/пароль: Test1@test.ru/Test1@test.ru)
+
 
