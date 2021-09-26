@@ -1,35 +1,36 @@
 import * as React from 'react';
 import {Box, Flex, Grid, Stack, Text} from "@chakra-ui/react";
+import {IMortgageAgreement} from "../services/MortgageAgreements";
 
-export function ContractCardFull(_props) {
+export function ContractCardFull(props: IMortgageAgreement) {
     return (
         <Box bg={'white'} padding={'32px'} borderRadius={'4px'}>
             <Stack spacing={'48px'}>
                 <Stack spacing={'24px'}>
                     <Stack width={'100%'} spacing={'8px'}>
-                        <Text fontWeight={600} fontSize={22}>Ипотечный договор № 2328 3823 2832 83</Text>
+                        <Text fontWeight={600} fontSize={22}>Ипотечный договор № {props.documentNumber}</Text>
 
                         <Text fontSize={14}>12.02.2021 – 12.02.2054</Text>
                     </Stack>
 
-                    <DataItem text={'Остаток долга по ипотеке'} value={<Text fontWeight={'600'}>2 563 726 ₽</Text>}/>
+                    <DataItem text={'Остаток долга по ипотеке'} value={<Text fontWeight={'600'}>{props.remainingAmount} ₽</Text>}/>
                 </Stack>
 
                 <Stack spacing={'30px'}>
                     <Text fontWeight={600} fontSize={18}>Информация о заемщике</Text>
                     <Grid templateColumns={'1fr 1fr'} rowGap={'30px'}>
-                        <DataItem text={'Ф.И.О.'} value={'Иванов Петр Степанович'}/>
-                        <DataItem text={'Дата рождения'} value={'28.02.1983'}/>
-                        <DataItem text={'Пол'} value={'М.'}/>
-                        <DataItem text={'Сфера деятельности'} value={'Офис'}/>
+                        <DataItem text={'Ф.И.О.'} value={props.personSurname + ' ' + props.personPatronymic + ' ' + props.personName}/>
+                        <DataItem text={'Дата рождения'} value={props.personBirthDate}/>
+                        <DataItem text={'Пол'} value={props.personSex}/>
+                        <DataItem text={'Сфера деятельности'} value={props.personOccupation}/>
                     </Grid>
                 </Stack>
 
                 <Stack spacing={'30px'}>
                     <Text fontWeight={600} fontSize={18}>Паспортные данные</Text>
                     <Grid templateColumns={'1fr 1fr'} rowGap={'30px'}>
-                        <DataItem text={'Серия номер паспорта'} value={'9281 272918'}/>
-                        <DataItem text={'Дата выдачи'} value={'28.02.1983'}/>
+                        <DataItem text={'Серия номер паспорта'} value={props.passportSeries + '' + props.passportNumber}/>
+                        {/*<DataItem text={'Дата выдачи'} value={props.pa}/>*/}
                     </Grid>
                 </Stack>
 
@@ -37,16 +38,16 @@ export function ContractCardFull(_props) {
                 <Stack spacing={'30px'}>
                     <Text fontWeight={600} fontSize={18}>Информация о недвижимости</Text>
                     <Grid templateColumns={'1fr 1fr'} rowGap={'30px'}>
-                        <DataItem text={'Тип недвижимости'} value={'Квартира'}/>
-                        <DataItem text={'Оценочная стоимость'} value={'4 038 372 ₽ '}/>
+                        <DataItem text={'Тип недвижимости'} value={props.type}/>
+                        <DataItem text={'Оценочная стоимость'} value={props.estimatedCost + ' ₽'}/>
 
-                        <DataItem text={'Город'} value={'г. Москва'}/>
-                        <DataItem text={'Год постройки'} value={'2001'}/>
+                        <DataItem text={'Город'} value={props.city}/>
+                        <DataItem text={'Год постройки'} value={String(props.buildingYear)}/>
                     </Grid>
 
                     <Grid templateColumns={'1fr'} rowGap={'30px'}>
-                        <DataItem text={'Кадастровый номер'} value={'737:9382'}/>
-                        <DataItem text={'Адрес'} value={'ул.Верхняя Красносельская, д. 92, кв. 3'}/>
+                        <DataItem text={'Кадастровый номер'} value={props.kadasterNumber}/>
+                        <DataItem text={'Адрес'} value={props.address}/>
                     </Grid>
                 </Stack>
 

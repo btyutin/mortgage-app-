@@ -78,8 +78,6 @@ export class ProfileService {
 
     @computed
     public get roles() {
-        console.log(this.info?.businessRoles)
-
         return this.info?.businessRoles || []
     }
 

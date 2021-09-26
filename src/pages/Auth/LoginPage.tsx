@@ -25,6 +25,12 @@ export const LoginForm = observer(function LoginForm() {
         authService.authenticate(new CredentialsGrant('sogaz', 'sogaz'));
     }
 
+    function asAlfains(e: React.SyntheticEvent) {
+        e.preventDefault();
+
+        authService.authenticate(new CredentialsGrant('alphains', 'alphains'));
+    }
+
     function asBank(e: React.SyntheticEvent) {
         e.preventDefault();
 
@@ -65,9 +71,12 @@ export const LoginForm = observer(function LoginForm() {
                     <Button type={'submit'} onClick={asBank} width={'100%'}>
                         Войти как банк
                     </Button>
-
                     <Button type={'submit'} onClick={asLandlord} width={'100%'}>
-                        Войти как страховая
+                        Войти как страховая (Согаз)
+                    </Button>
+
+                    <Button type={'submit'} onClick={asAlfains} width={'100%'}>
+                        Войти как страховая (Альфа)
                     </Button>
 
                     <Button type={'submit'} onClick={asClient} width={'100%'}>

@@ -10,9 +10,13 @@ import {useService} from "../core/decorators/service";
 import {ProfileService} from "../services/ProfileService";
 import {MortgageContracts} from "../pages/Bank/MortgageContracts";
 import {MortgageContract} from "../pages/Bank/MortgageContract";
-import {ClientContainer} from "../components/ClientContainer";
 import {LifeInsurancePage} from "../pages/Client/LifeInsurancePage";
 import {TitleInsurancePage} from "../pages/Client/TitleInsurancePage";
+import {MortgageInsurance} from "../pages/Insurer/MortgageInsurance";
+import {Insurance} from "../pages/Insurer/Insurance";
+import {ClientInsuranceAgreement} from "../pages/Client/ClientInsuranceAgreement";
+import {ClientContainer} from "../components/ClientContainer";
+import {PoliceConfirm} from "../pages/Client/PoliceConfirm";
 
 export const Routing = observer(function Routing() {
     const profileService = useService(ProfileService)
@@ -27,8 +31,8 @@ export const Routing = observer(function Routing() {
                 {({match}) => {
                     return (
                         <Switch>
-                            <Route path={match.path + '/:id'} component={MortgageContract}/>
-                            <Route path={match.path} exact component={MortgageContracts}/>
+                            <Route path={match.path + '/:id'} component={Insurance}/>
+                            <Route path={match.path} exact component={MortgageInsurance}/>
                         </Switch>
                     )
                 }}
@@ -40,11 +44,24 @@ export const Routing = observer(function Routing() {
 
     const clientRoutes = (
         <Switch>
-            <Route path={'/offers/real-estate'} component={RealEstateInsurancePage}/>
-            <Route path={'/offers/life'} component={LifeInsurancePage}/>
-            <Route path={'/offers/title'} component={TitleInsurancePage}/>
+            <Route path={'/offers'} render={({match}) => {
+                return (
+                    <ClientContainer>
+                        <Switch>
+                            <Route path={match.path + '/real-estate'} component={RealEstateInsurancePage}/>
+                            <Route path={match.path + '/life'} component={LifeInsurancePage}/>
+                            <Route path={match.path + '/title'} component={TitleInsurancePage}/>
+                        </Switch>
+                    </ClientContainer>
+                )
+            }}/>
+            PoliceConfirm
 
-            <Redirect to={'/offers/real-estate'}/>
+            <Route path={'/insurance/agreement'} component={ClientInsuranceAgreement}/>
+            <Route path={'/insurance/police/:id/confirm'} component={PoliceConfirm}/>
+
+
+            <Redirect from={'/'} to={'/offers/real-estate'}/>
         </Switch>
     )
 
@@ -83,7 +100,7 @@ export const Routing = observer(function Routing() {
 
                 return (
                     <>
-                        {isInsurer || isBank && (
+                        {(isInsurer || isBank) && (
                             <AuthorizedContainer>
                                 {isInsurer && insurerRoutes}
 
@@ -91,7 +108,7 @@ export const Routing = observer(function Routing() {
                             </AuthorizedContainer>
                         )}
 
-                        {isClient && <ClientContainer children={clientRoutes}/>}
+                        {isClient && clientRoutes}
                     </>
                 )
             }}

@@ -3,10 +3,10 @@ import {Button as BaseButton, Input as BaseInput, chakra} from "@chakra-ui/react
 
 export const Input = chakra(BaseInput, {
     baseStyle: {
-        bg: "input-bg",
+        bg: "white",
         color: "grey",
-        borderRadius: 0,
-        height: 62,
+        borderRadius: '4px',
+        height: 46,
         fontSize: 18,
         padding: 18,
     }

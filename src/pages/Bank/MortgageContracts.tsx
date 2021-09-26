@@ -3,9 +3,17 @@ import {observer} from "mobx-react";
 import {Heading, Stack, Tab, TabList, Tabs} from "@chakra-ui/react";
 import {ContractCard} from "../../components/ContractCard";
 import {useHistory} from "react-router-dom";
+import {useService} from "../../core/decorators/service";
+import {MortgageAgreements} from "../../services/MortgageAgreements";
 
 export const MortgageContracts = observer(function MortgageContracts(_props) {
     const history = useHistory();
+
+    const mortgageAgreements = useService(MortgageAgreements)
+
+    React.useEffect(() => {
+        mortgageAgreements.getList()
+    }, [])
 
     return (
         <Stack width={'100%'} spacing={'30px'}>
@@ -22,9 +30,15 @@ export const MortgageContracts = observer(function MortgageContracts(_props) {
             </Stack>
 
             <Stack spacing={'16px'}>
-                <ContractCard onClick={() => history.push('/contracts/22')}/>
-                <ContractCard onClick={() => history.push('/contracts/22')}/>
-                <ContractCard onClick={() => history.push('/contracts/22')}/>
+                {mortgageAgreements.list.map(ma => {
+                    return (
+                        <ContractCard
+                            key={ma.documentNumber}
+                            onClick={() => history.push(`/contracts/${ma.documentNumber.replace('/', '|')}`)}
+                            {...ma}
+                        />
+                    )
+                })}
             </Stack>
         </Stack>
     );

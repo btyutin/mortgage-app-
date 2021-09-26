@@ -2,23 +2,23 @@ import * as React from 'react';
 import {observer} from "mobx-react";
 import {Box, Flex, Link, Spinner, Stack, Text} from "@chakra-ui/react";
 import {ContractCardFull} from "../../components/ContractCardFull";
-import {InsurancePolicies} from "../../components/InsurancePolicies";
 import {Link as RouterLink} from 'react-router-dom';
 import {RouteChildrenProps} from "react-router";
 import {useService} from "../../core/decorators/service";
-import {MortgageAgreement} from "../../services/MortgageAgreement";
+import {InsuranceAgreement} from "../../services/InsuranceAgreement";
+import {InsurancePolicy} from "../../components/InsurancePolicy";
 
-export const MortgageContract = observer(function MortgageContract(props: RouteChildrenProps<{ id: string }>) {
-    const mortgageAgreement = useService(MortgageAgreement)
+export const Insurance = observer(function Insurance(props: RouteChildrenProps<{ id: string }>) {
+    const insuranceAgreement = useService(InsuranceAgreement)
 
 
     React.useEffect(() => {
         const id = props.match.params.id.replace('|', '/')
 
-        mortgageAgreement.getMortgage(id)
+        insuranceAgreement.getInsurance(id)
     }, [])
 
-    if (mortgageAgreement.requestStatus === 'pending') {
+    if (insuranceAgreement.requestStatus === 'pending') {
         return (
             <Flex>
                 <Spinner/>
@@ -26,14 +26,13 @@ export const MortgageContract = observer(function MortgageContract(props: RouteC
         )
     }
 
-    if (!mortgageAgreement.mortgage) {
+    if (!insuranceAgreement.insurance) {
         return (
             <Flex>
                 <Text fontWeight={600} fonsSize={18}>Ипотечный договор не найден</Text>
             </Flex>
         )
     }
-
 
     return (
         <Stack width={'100%'} spacing={'30px'}>
@@ -49,9 +48,12 @@ export const MortgageContract = observer(function MortgageContract(props: RouteC
                 </Flex>
 
             </Link>
-            <ContractCardFull {...mortgageAgreement.mortgage}/>
 
-            <InsurancePolicies policesList={mortgageAgreement.polices}/>
+            <ContractCardFull {...insuranceAgreement.insurance.mortgageDocument}/>
+
+            {insuranceAgreement.insurance.status === 'NEW' && (
+                <InsurancePolicy/>
+            )}
         </Stack>
     );
 })
